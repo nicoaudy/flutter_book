@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:book_app/consttants.dart';
 import 'package:book_app/screens/details_screen.dart';
 import 'package:book_app/widgets/book_rating.dart';
@@ -7,9 +9,19 @@ import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   void _openFileExplorer() async {
+    Directory tempDir = await getTemporaryDirectory();
+    String tempPath = tempDir.path;
+
+    Directory appDocDir = await getApplicationDocumentsDirectory();
+    String appDocPath = appDocDir.path;
+
+    print(tempPath);
+    print(appDocPath);
+
     try {
       var file = await FilePicker.getFilePath();
       print(file);
