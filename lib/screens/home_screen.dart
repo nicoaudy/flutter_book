@@ -3,10 +3,21 @@ import 'package:book_app/screens/details_screen.dart';
 import 'package:book_app/widgets/book_rating.dart';
 import 'package:book_app/widgets/reading_card_list.dart';
 import 'package:book_app/widgets/two_side_rounded_button.dart';
+import 'package:file_picker/file_picker.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class HomeScreen extends StatelessWidget {
+  void _openFileExplorer() async {
+    try {
+      var file = await FilePicker.getFilePath();
+      print(file);
+    } on PlatformException catch (e) {
+      print("Unsupported operation" + e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -195,6 +206,14 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          _openFileExplorer();
+        },
+        backgroundColor: Colors.white,
+        foregroundColor: Colors.grey,
+        child: Icon(Icons.cloud_upload),
+      ),
     );
   }
 
@@ -247,7 +266,7 @@ class HomeScreen extends StatelessWidget {
                     child: Row(
                       children: <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(right: 10.0), 
+                          padding: EdgeInsets.only(right: 10.0),
                           child: BookRating(score: 4.9),
                         ),
                         Expanded(
